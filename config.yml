@@ -1,8 +1,10 @@
 aws:
   region: "us-east-1"
   bucket: "your-s3-bucket-name"
+  keyPrefix: "path/to/your/key"
 gcs:
-  bucket: "your-gcs-bucket-name"
+  bucketName: "your-gcs-bucket-name"
+  keyPrefix: "path/to/your/key"
 postgres:
   host: "localhost"
   port: 5432
