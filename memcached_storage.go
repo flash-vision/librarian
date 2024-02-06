@@ -2,7 +2,6 @@ package librarian
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"time"

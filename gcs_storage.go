@@ -4,7 +4,6 @@ import (
 	"context"
 	"cloud.google.com/go/storage"
 	"io/ioutil"
-	"bytes"
 )
 
 // GCSStorage implements the Storer interface for Google Cloud Storage.
