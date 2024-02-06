@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/spf13/viper"
 )
 
 type S3Storage struct {
@@ -28,4 +29,10 @@ func (s *S3Storage) Store(ctx context.Context, key string, value []byte) error {
 	_, err := s.Client.PutObject(&s3.PutObjectInput{
 		Bucket: aws.String(s.Bucket),
 		Key:    aws.String(key),
-		Body:   bytes.NewReader(value
+		Body:   bytes.NewReader(value),
+	})
+	if err != nil {
+		return fmt.Errorf("s3 store error: %w", err)
+	}
+	return nil
+}
