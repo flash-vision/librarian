@@ -1,6 +1,10 @@
 package librarian
 
-import "sync"
+import (
+	"context"
+	"errors"
+	"sync"
+)
 
 // InMemoryStorage provides a basic in-memory key-value store.
 type InMemoryStorage struct {
@@ -16,16 +20,22 @@ func NewInMemoryStorage() *InMemoryStorage {
 }
 
 // Store saves a key-value pair in the memory.
-func (ims *InMemoryStorage) Store(key string, value []byte) {
+// Adjusted to match the Storer interface if it requires context.Context
+func (ims *InMemoryStorage) Store(ctx context.Context, key string, value []byte) error {
 	ims.mu.Lock()
 	defer ims.mu.Unlock()
 	ims.store[key] = value
+	return nil // Assuming storing in memory always succeeds
 }
 
 // Retrieve fetches a value by key from the memory.
-func (ims *InMemoryStorage) Retrieve(key string) ([]byte, bool) {
+// Modified to meet the Storer interface requirements
+func (ims *InMemoryStorage) Retrieve(ctx context.Context, key string) ([]byte, error) {
 	ims.mu.RLock()
 	defer ims.mu.RUnlock()
 	value, found := ims.store[key]
-	return value, found
+	if !found {
+		return nil, errors.New("key not found")
+	}
+	return value, nil
 }
